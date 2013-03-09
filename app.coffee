@@ -1,5 +1,6 @@
 port = process.env.PORT || 3000
 host = process.env.HOST || "0.0.0.0"
+hostname = process.env.HOSTNAME || "127.0.0.1"
 
 require('zappajs') host, port, ->
   manifest = require './package.json'
@@ -42,7 +43,7 @@ require('zappajs') host, port, ->
   passport.use new LinkedInStrategy
       consumerKey: LINKEDIN_API_KEY
       consumerSecret: LINKEDIN_SECRET_KEY
-      callbackURL: "http://#{host}:#{port}/auth/linkedin/callback"
+      callbackURL: "http://#{hostname}:#{port}/auth/linkedin/callback"
     , (token, tokenSecret, profile, done) ->
       console.log 'passport authentication', token, tokenSecret, profile
       done null, profile
