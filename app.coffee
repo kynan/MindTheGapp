@@ -47,6 +47,12 @@ require('zappajs') host, port, ->
       console.log 'passport authentication', token, tokenSecret, profile
       done null, profile
 
+  ensureAuthenticated = (req, res, next) ->
+    if req.isAuthenticated()
+      return next()
+    req.session.redirect_to = req.path
+    res.redirect '/auth/linkedin'
+
   @get '/': ->
     @response.redirect '/home'
 
@@ -67,8 +73,8 @@ require('zappajs') host, port, ->
   @get '/auth/linkedin', passport.authenticate 'linkedin'
 
   @get '/auth/linkedin/callback',
-    passport.authenticate('linkedin', { failureRedirect: '/auth/linkedin/failed' }), ->
-      @response.redirect '/'
+    passport.authenticate('linkedin', { failureRedirect: '/auth/linkedin/failed' }), (req, res) ->
+      res.redirect req.session.redirect_to || '/'
 
   @get '/logout': ->
     @request.logout()
