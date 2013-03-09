@@ -22,16 +22,14 @@ html
                 - else
                   li
                     a(href='#{key}') #{val}
-          ul.nav.pull-right
+          ul.pull-right
             li.btn-group
               - if (user)
-                button.btn=user.displayName
-                button.btn
-                  a(href='logout')
-                    i.icon-off
+                a.btn(href='profile')=user.displayName
+                a.btn(href='logout')
+                  i.icon-off
               - else
-                button.btn
-                  a(href='auth/linkedin') Login with LinkedIn
+                a.btn(href='auth/linkedin') Login with LinkedIn
 
     div.container
       block content
