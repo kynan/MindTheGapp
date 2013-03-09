@@ -2,7 +2,7 @@
 html
   head
     title #{title}
-    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css')
+    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css')
     style
       body {
        padding-top: 60px;
@@ -22,6 +22,17 @@ html
                 - else
                   li
                     a(href='#{key}') #{val}
+          ul.nav.pull-right
+            li.btn-group
+              - if (user)
+                button.btn=user.displayName
+                button.btn
+                  a(href='logout')
+                    i.icon-off
+              - else
+                button.btn
+                  a(href='auth/linkedin') Login with LinkedIn
 
     div.container
       block content
+    script(src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js")
