@@ -82,3 +82,11 @@ require('zappajs') host, port, ->
 
   @get '/auth/linkedin/failed': ->
     @response.json 'Authentication failed'
+
+  @get '/profile', ensureAuthenticated, ->
+    console.log @request.user
+    @render 'profile.jade',
+      title: manifest.name
+      id: 'profile'
+      brand: manifest.name
+      user: @request.user
