@@ -6,9 +6,11 @@ baseurl = process.env.BASEURL || "http://#{hostname}:#{port}"
 require('zappajs') host, port, ->
   manifest = require './package.json'
   fs = require 'fs'
+  md5 = require('blueimp-md5').md5
   mongoose = require 'mongoose'
   passport = require 'passport'
   LinkedInStrategy = require('passport-linkedin').Strategy
+  Report = require('./models').report
 
   @configure =>
     @use 'logger',
@@ -105,7 +107,11 @@ require('zappajs') host, port, ->
     return @response.redirect '/profile' unless position
     format = (date) ->
       if date.month then "#{date.month}/#{date.year}" else date.year
+    # We take a hash over the user id, the position id and the company id
+    hashstring = "#{@request.user.id}#{position.id}#{position.company.id}"
+    console.log "hashing #{hashstring}: #{md5(hashstring)}"
     @render 'rate.jade',
+      hash: md5(hashstring)
       title: manifest.name
       id: 'rate'
       brand: manifest.name
@@ -119,5 +125,9 @@ require('zappajs') host, port, ->
         promotion: 'Did you receive a promotion at the company?'
         raise: 'Did you receive a raise at the company?'
 
-  @post '/companies/:id/rate', ensureAuthenticated, ->
-    @response.json @body
+  @post '/companies/rate', ensureAuthenticated, ->
+    report = @body
+    Report.findOneAndUpdate {hash: report.hash}, report, upsert: true, (err, report) =>
+      console.log 'Received report', report
+      @response.json err if err?
+      @response.json report unless err?

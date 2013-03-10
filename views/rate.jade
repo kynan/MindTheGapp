@@ -12,7 +12,9 @@ block content
     strong  #{position.title}
     |  from #{startDate} to #{endDate}
 
-  form.form(action='/companies/#{position.company.id}/rate', method='POST')
+  form.form(action='/companies/rate', method='POST')
+    input(type='hidden', name='hash', value='#{hash}')
+    input(type='hidden', name='companyId', value='#{position.company.id}')
     fieldset
       legend Gender
       for gender in ['male', 'female']
