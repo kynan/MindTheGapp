@@ -71,7 +71,7 @@ require('zappajs') host, port, ->
   @get '/source': ->
     @response.redirect manifest.source
 
-  @get '/auth/linkedin', passport.authenticate 'linkedin'
+  @get '/auth/linkedin', passport.authenticate 'linkedin', {scope: ['r_basicprofile', 'r_fullprofile']}
 
   @get '/auth/linkedin/callback',
     passport.authenticate('linkedin', { failureRedirect: '/auth/linkedin/failed' }), (req, res) ->
