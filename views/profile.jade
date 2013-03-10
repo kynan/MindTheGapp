@@ -5,13 +5,20 @@ block content
 
   table.table.table-striped.table-hover
     caption
-      h3 Companies you've worked for
+      h3 Positions you have held
     thead
       tr
-        th Name
+        th Title
+        th Company
         th Sector
+        th
     tbody
       for position in positions
         tr
+          td=position.title
           td=position.company.name
           td=position.company.industry
+          td
+            a.btn.btn-primary(href='companies/#{position.company.id}/rate', title='Rate this employer!')
+              i.icon-white.icon-hand-right
+              |  Rate this employer!
