@@ -75,7 +75,9 @@ require('zappajs') host, port, ->
 
   @get '/auth/linkedin/callback',
     passport.authenticate('linkedin', { failureRedirect: '/auth/linkedin/failed' }), (req, res) ->
-      res.redirect req.session.redirect_to || '/'
+      target = req.session.redirect_to || '/profile'
+      delete req.session.redirect_to
+      res.redirect target
 
   @get '/logout': ->
     @request.logout()
