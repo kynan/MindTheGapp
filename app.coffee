@@ -76,6 +76,10 @@ require('zappajs') host, port, ->
   @get '/source': ->
     @response.redirect manifest.source
 
+  @get '/responses': ->
+    Report.find (err, reports) =>
+      @response.json reports
+
   @get '/auth/linkedin', passport.authenticate 'linkedin', {scope: ['r_basicprofile', 'r_fullprofile']}
 
   @get '/auth/linkedin/callback',
