@@ -34,4 +34,9 @@ block content
           label.radio
             input(type='radio', name='#{field}', value='#{val}')
             | #{answer}
+        - if (field == 'raise')
+          div If you did receive a raise, approximately what was the percentage increase?
+          .input-append
+            input.span1(type='text', name='raise_percentage')
+            span.add-on %
     button.btn.btn-primary(type='submit') Submit
