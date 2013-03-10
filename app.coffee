@@ -34,17 +34,16 @@ require('zappajs') host, port, ->
   LINKEDIN_SECRET_KEY = process.env.LINKEDIN_SECRET_KEY
 
   passport.serializeUser (user, done) ->
-    console.log 'serializing', user
     done null, user
 
   passport.deserializeUser (user, done) ->
-    console.log 'deserializing', user
     done null, user
 
   passport.use new LinkedInStrategy
       consumerKey: LINKEDIN_API_KEY
       consumerSecret: LINKEDIN_SECRET_KEY
       callbackURL: "#{baseurl}/auth/linkedin/callback"
+      profileFields: ['id', 'first-name', 'last-name', 'formatted-name', 'industry', 'positions', 'picture-url']
     , (token, tokenSecret, profile, done) ->
       console.log 'passport authentication', token, tokenSecret, profile
       done null, profile
@@ -87,8 +86,10 @@ require('zappajs') host, port, ->
 
   @get '/profile', ensureAuthenticated, ->
     console.log @request.user
+    console.log @request.user._json.positions.values
     @render 'profile.jade',
       title: manifest.name
       id: 'profile'
       brand: manifest.name
       user: @request.user
+      positions: @request.user._json.positions.values

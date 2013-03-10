@@ -2,3 +2,16 @@ extends layout
 
 block content
   p Hi, #{user.displayName}!
+
+  table.table.table-striped.table-hover
+    caption
+      h3 Companies you've worked for
+    thead
+      tr
+        th Name
+        th Sector
+    tbody
+      for position in positions
+        tr
+          td=position.company.name
+          td=position.company.industry
