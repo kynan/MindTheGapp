@@ -7,6 +7,7 @@ require('zappajs') host, port, ->
   manifest = require './package.json'
   fs = require 'fs'
   md5 = require('blueimp-md5').md5
+  flash = require 'connect-flash'
   mongoose = require 'mongoose'
   passport = require 'passport'
   LinkedInStrategy = require('passport-linkedin').Strategy
@@ -20,6 +21,7 @@ require('zappajs') host, port, ->
       'session': secret: 'shhhhhhhhhhhhhh!',
       passport.initialize(),
       passport.session(),
+      flash(),
       @app.router,
       'static'
     @set 'view engine', 'jade'
@@ -69,6 +71,7 @@ require('zappajs') host, port, ->
         id: 'home'
         brand: manifest.name
         user: @request.user
+        info: @request.flash 'info' || []
 
   @get '/source': ->
     @response.redirect manifest.source
@@ -97,6 +100,7 @@ require('zappajs') host, port, ->
       brand: manifest.name
       user: @request.user
       positions: @request.user._json.positions.values
+      info: @request.flash 'info' || []
 
   @get '/companies/:id/rate', ensureAuthenticated, ->
     position = null
@@ -124,10 +128,12 @@ require('zappajs') host, port, ->
         suit_personality: 'Does the culture suite your personality?'
         promotion: 'Did you receive a promotion at the company?'
         raise: 'Did you receive a raise at the company?'
+      info: @request.flash 'info' || []
 
   @post '/companies/rate', ensureAuthenticated, ->
     report = @body
     Report.findOneAndUpdate {hash: report.hash}, report, upsert: true, (err, report) =>
       console.log 'Received report', report
-      @response.json err if err?
-      @response.json report unless err?
+      #@response.json err if err?
+      @request.flash 'info', ['Thanks for your report, your response was recorded!']
+      @response.redirect '/profile'
