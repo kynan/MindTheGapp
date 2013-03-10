@@ -17,6 +17,7 @@ ReportSchema = new mongoose.Schema
   promotion: Boolean
   raise: Boolean
   raise_percentage: Number
+  salary: Number
 
 Report = mongoose.model 'Report', ReportSchema
 module.exports.report = Report
