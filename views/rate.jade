@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  h3 How do you think your company is on EQUALITY?
+  p You have worked at
+    strong  #{position.company.name}
+    |  as
+    strong  #{position.title}
+    |  from #{startDate} to #{endDate}
+
+  form.form(action='/companies/#{position.company.id}/rate', method='POST')
+    fieldset
+      legend Gender
+      for gender in ['male', 'female']
+        label.radio
+          input(type='radio', name='gender', value='#{gender}')
+          | #{gender}
+    fieldset
+      legend Female to male ratio (approx)
+      input.span1(type='text', name='female_ratio')
+      |  :
+      input.span1(type='text', name='female_ratio')
+    fieldset
+      legend How would you describe the culture at your company?
+      for culture in cultures
+        label.checkbox
+          input(type='checkbox', name='culture', value='#{culture}')
+          | #{culture}
+      textarea(rows='2', name='culture_text', placeholder='140 characters to describe the culture of your company')
+    for question, field in questions
+      fieldset
+        legend=question
+        for answer in ['Yes', 'No']
+          label.radio
+            input(type='radio', name='#{field}', value='#{answer}')
+            | #{answer}
+    button.btn.btn-primary(type='submit') Submit

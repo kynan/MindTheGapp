@@ -93,3 +93,29 @@ require('zappajs') host, port, ->
       brand: manifest.name
       user: @request.user
       positions: @request.user._json.positions.values
+
+  @get '/companies/:id/rate', ensureAuthenticated, ->
+    position = null
+    for pos in @request.user._json.positions.values
+      if pos.company.id == parseInt @params.id
+        position = pos
+        break
+    return @response.redirect '/profile' unless position
+    format = (date) ->
+      if date.month then "#{date.month}/#{date.year}" else date.year
+    @render 'rate.jade',
+      title: manifest.name
+      id: 'rate'
+      brand: manifest.name
+      user: @request.user
+      position: position
+      startDate: if position.startDate then format position.startDate else 'today'
+      endDate: if position.endDate then format position.endDate else 'today'
+      cultures: ['dog eat dog', 'hyper aggressive', 'egalitarian', 'super fun', 'easy going']
+      questions:
+        suit_personality: 'Does the culture suite your personality?'
+        promotion: 'Did you receive a promotion at the company?'
+        raise: 'Did you receive a raise at the company?'
+
+  @post '/companies/:id/rate', ensureAuthenticated, ->
+    @response.json @body
