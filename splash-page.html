@@ -7,6 +7,28 @@ html {
 	color: #4b161e;  /* 'mild steel' */
 	font: 1.2em sans-serif;
 	text-align: center;
+
+	display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+	 -webkit-box-align: center;
+	 -webkit-box-pack: center;
+
+	display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+	-moz-box-align: center;
+	-moz-box-pack: center;
+
+	display: -ms-flexbox;      /* TWEENER - IE 10 */
+	-ms-flex-align: center;
+	-ms-flex-pack: center;
+
+	display: -webkit-flex;     /* NEW - Chrome */
+	-webkit-justify-content: center;
+	-webkit-align-content: center;
+	-webkit-align-items: center;
+
+	display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+	justify-content: center;
+	align-content: center;
+	align-items: center;
 }
 
 body {
@@ -28,7 +50,23 @@ h1 {
 }
 
 #tagline {
-	font: 1em/1.2 ;
+	font: 1em/1.3 Apercu, sans-serif;
+}
+
+#tagline > span {
+	display: block;
+}
+
+#equal {
+	font-size: 5em;
+}
+
+#workplace {
+	font-size: 2em;
+}
+
+#questionmark {
+	font-size: 3em;
 }
 	</style>
 </head>
@@ -37,6 +75,6 @@ h1 {
 	<p id="tagline"><span id="how">How</span>
 		<span id="equal">equal</span>
 		<span id="is-your">is your</span>
-		<span id="workplace">workplace?</span></p>
+		<span id="workplace">workplace</span><span id="questionmark">?</span></p>
 </body>
 </html>
