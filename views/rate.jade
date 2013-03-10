@@ -17,9 +17,9 @@ block content
           | #{gender}
     fieldset
       legend Female to male ratio (approx)
-      input.span1(type='text', name='female_ratio')
+      input.span1(type='text', name='ratio[female]')
       |  :
-      input.span1(type='text', name='female_ratio')
+      input.span1(type='text', name='ratio[male]')
     fieldset
       legend How would you describe the culture at your company?
       for culture in cultures
@@ -30,8 +30,8 @@ block content
     for question, field in questions
       fieldset
         legend=question
-        for answer in ['Yes', 'No']
+        for answer, val in {1: 'Yes', 0: 'No'}
           label.radio
-            input(type='radio', name='#{field}', value='#{answer}')
+            input(type='radio', name='#{field}', value='#{val}')
             | #{answer}
     button.btn.btn-primary(type='submit') Submit
