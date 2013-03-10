@@ -1,7 +1,7 @@
 {
   "name":                     "MindTheGapp",
   "version":                  "0.0.1",
-  "description":              "How gender equal is your company?",
+  "description":              "How equal is your workplace?",
   "homepage":                 "https://mindthegapp.heroku.com",
   "source":                   "https://github.com/kynan/MindTheGapp",
   "author":                   "Florian Rathgeber <florian.rathgeber@gmail.com>",
