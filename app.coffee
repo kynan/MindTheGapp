@@ -59,7 +59,7 @@ require('zappajs') host, port, ->
     res.redirect '/auth/linkedin'
 
   @get '/': ->
-    @response.redirect '/home'
+    @render 'landing.jade'
 
   @get '/home': ->
     md = require('node-markdown').Markdown
@@ -90,7 +90,7 @@ require('zappajs') host, port, ->
 
   @get '/logout': ->
     @request.logout()
-    @response.redirect '/'
+    @response.redirect '/home'
 
   @get '/auth/linkedin/failed': ->
     @response.json 'Authentication failed'
