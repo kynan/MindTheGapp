@@ -19,6 +19,9 @@ block content
           td=position.company.name
           td=position.company.industry
           td
-            a.btn.btn-primary(href='companies/#{position.company.id}/rate', title='Rate this employer!')
-              i.icon-white.icon-hand-right
-              |  Rate this employer!
+            - if (position.company.id)
+              a.btn.btn-primary(href='companies/#{position.company.id}/rate', title='Rate this employer!')
+                i.icon-white.icon-hand-right
+                |  Rate this employer!
+            - else
+              span Sorry, that employer is not registered with LinkedIn
